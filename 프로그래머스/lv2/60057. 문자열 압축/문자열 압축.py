@@ -1,25 +1,30 @@
+ 
+
 def solution(s):
-    answer = len(s)  # 초기값은 문자열의 길이로 설정
-    n = len(s)
+    result=[]
+    
+    if len(s)==1:
+        return 1
+    
+    for i in range(1, len(s)+1):
+        b = ''
+        cnt = 1
+        tmp=s[:i]
 
-    for i in range(1, n // 2 + 1):
-        lst = [s[j:j + i] for j in range(0, n, i)]
-        compressed = ""
-        count = 1
-
-        for k in range(1, len(lst)):
-            if lst[k - 1] == lst[k]:
-                count += 1
+        for j in range(i, len(s)+i, i):
+            
+            if tmp==s[j:i+j]:
+                cnt+=1
             else:
-                if count > 1:
-                    compressed += str(count)
-                compressed += lst[k - 1]
-                count = 1
+                if cnt!=1:
+                    b = b + str(cnt)+tmp
+                else:
+                    b = b + tmp
+                    
+                tmp=s[j:j+i]
+                cnt = 1
+                
+        result.append(len(b))
+        
 
-        if count > 1:
-            compressed += str(count)
-        compressed += lst[-1]
-
-        answer = min(answer, len(compressed))
-
-    return answer
+    return min(result)
