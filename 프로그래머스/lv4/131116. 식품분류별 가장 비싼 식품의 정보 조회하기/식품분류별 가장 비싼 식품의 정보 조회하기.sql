@@ -1,17 +1,7 @@
-# SELECT 
-#     CATEGORY, price MAX_PRICE, PRODUCT_NAME
-# FROM FOOD_PRODUCT
-# where PRICE IN (SELECT MAX(PRICE) FROM FOOD_PRODUCT group by CATEGORY)
-# group by CATEGORY
-# having CATEGORY IN ('과자','국','김치','식용유')
-# ORDER BY MAX_PRICE DESC
-
-SELECT CATEGORY, PRICE AS MAX_PRICE, PRODUCT_NAME
-FROM FOOD_PRODUCT
-WHERE (CATEGORY, PRICE) IN (
-                            SELECT CATEGORY, MAX(PRICE)
-                            FROM FOOD_PRODUCT
-                            GROUP BY CATEGORY
-                            HAVING CATEGORY IN ('국', '김치', '식용유', '과자')
-)
-ORDER BY MAX_PRICE DESC
+SELECT CATEGORY, price MAX_PRICE, PRODUCT_NAME
+from FOOD_PRODUCT 
+where (CATEGORY,price) in 
+    (select CATEGORY, max(price) from FOOD_PRODUCT
+    group by CATEGORY
+    having CATEGORY in ('과자','국','김치','식용유'))
+order by MAX_PRICE desc
